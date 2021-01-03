@@ -3,7 +3,7 @@ import re
 from typing import List, Dict
 
 
-def part1(passports: List[Dict["str", "str"]]) -> int:
+def part1(passports: List[Dict[str, str]]) -> int:
     required_keys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
     valid_passports = 0
     for passport in passports:
@@ -16,7 +16,7 @@ def part1(passports: List[Dict["str", "str"]]) -> int:
     return valid_passports
 
 
-def part2(passports: List[Dict["str", "str"]]) -> int:
+def part2(passports: List[Dict[str, str]]) -> int:
     required_keys = frozenset(("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"))
     valid_passports = 0
     for passport in passports:
@@ -67,7 +67,7 @@ def parse(input: str) -> List[Dict]:
 
 
 def main():
-    filepath = "../inputs/day4.txt"
+    filepath = "../inputs/04.txt"
     with open(filepath) as f:
         content = f.read()
     passports = parse(content)
@@ -76,3 +76,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -24,7 +24,7 @@ def part2(numbers: List[int]):
 
 
 def main():
-    filepath = "../inputs/day1.txt"
+    filepath = "../inputs/01.txt"
     with open(filepath) as f:
         content = f.read()
     print(part2([int(x) for x in content.split()]))

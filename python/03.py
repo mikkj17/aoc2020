@@ -43,7 +43,7 @@ def part2(hill: List[str]):
 
 
 def main():
-    filepath = "../inputs/day3.txt"
+    filepath = "../inputs/03.txt"
     with open(filepath) as f:
         content = f.read()
     print(part2(content.split("\n")))
@@ -51,3 +51,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

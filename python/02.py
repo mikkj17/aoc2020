@@ -30,7 +30,7 @@ def part2(lines: List[str]):
 
 
 def main():
-    filepath = "../inputs/day2.txt"
+    filepath = "../inputs/02.txt"
     with open(filepath) as f:
         content = f.read()
     print(part2(content.split("\n")))
@@ -38,3 +38,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
