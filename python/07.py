@@ -27,7 +27,7 @@ dark violet bags contain no other bags.\
 class Bag:
     def __init__(self, description, amount):
         self.description = description
-        self.amount = amount
+        self.amount = int(amount)
 
     def __repr__(self):
         return f'{self.amount}: {self.description}'
@@ -74,13 +74,13 @@ def part1(rules: Dict[str, List[Bag]]) -> int:
     return [compute(rule, rules) for rule in rules].count(True)
 
 
-def compute2(left: str, mapping: Dict[str, List[Bag]]):
+def compute2(left: str, mapping: Dict[str, List[Bag]]) -> int:
     right = mapping[left]
     descriptions = [r.description for r in right]
     if 'no other bags' in descriptions:
         return 0
-    return sum([r.amount * compute2(r.description, mapping) for r in right])    # I hate recursion
-
+    return sum([r.amount + r.amount * compute2(r.description, mapping) for r in right])
+    
 
 def part2(rules: Dict[str, List[Bag]]) -> int:
     return compute2('shiny gold', rules)
@@ -90,9 +90,8 @@ def main():
     filepath = "../inputs/07.txt"
     with open(filepath) as f:
         content = f.read()
-    parsed = parse(test2)
+    parsed = parse(content)
     print(part2(parsed))
-
 
 if __name__ == "__main__":
     main()
