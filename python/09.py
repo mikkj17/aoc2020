@@ -1,5 +1,3 @@
-import pprint
-
 from typing import List
 
 test = """\
@@ -43,8 +41,17 @@ def part1(numbers: List[int], preamble_length: int) -> int:
     raise AssertionError("Should not come to this")
 
 
-def part2(numbers: List[int]) -> int:
-    pass
+def part2(numbers: List[int], preamble_length: int) -> int:
+    invalid_number = part1(numbers, preamble_length)
+    for index, number in enumerate(numbers):
+        ret = [number]
+        for inner_number in numbers[index + 1:]:
+            ret.append(inner_number)
+            if sum(ret) == invalid_number:
+                print('final result:', ret)
+                return min(ret) + max(ret)
+    
+    raise AssertionError("Should not come to this")
 
 
 def main():
@@ -52,7 +59,7 @@ def main():
     with open(filepath) as f:
         content = f.read()
     parsed = parse(content)
-    print(part1(parsed, 25))
+    print(part2(parsed, 25))
 
 if __name__ == "__main__":
     main()
