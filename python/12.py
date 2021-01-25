@@ -14,7 +14,7 @@ F11\
 def parse(inp: str) -> List[Tuple[str, str]]:
     return [(ins[0], int(ins[1:])) for ins in inp.splitlines()]
 
-def move(instructions: List[Tuple[str, str]]) -> Tuple[int, int]:
+def move(instructions: List[Tuple[str, int]]) -> Tuple[int, int]:
     x = y = 0
     direction = 90
     
@@ -42,11 +42,11 @@ def move(instructions: List[Tuple[str, str]]) -> Tuple[int, int]:
                 x -= value
     return x, y
 
-def part1(instructions: List[Tuple[str, str]]) -> int:
+def part1(instructions: List[Tuple[str, int]]) -> int:
     x, y = move(instructions)
     return abs(x) + abs(y)
 
-def helper(instructions: List[Tuple[str, str]]) -> Tuple[int, int]:
+def helper(instructions: List[Tuple[str, int]]) -> Tuple[int, int]:
     waypoint_x = 10
     waypoint_y = 1
     x = y = 0
@@ -80,7 +80,7 @@ def helper(instructions: List[Tuple[str, str]]) -> Tuple[int, int]:
 
     return x, y
 
-def part2(instructions: List[Tuple[str, str]]) -> int:
+def part2(instructions: List[Tuple[str, int]]) -> int:
     x, y = helper(instructions)
     return abs(x) + abs(y)
 
