@@ -40,7 +40,7 @@ def part2(nums: List[int]) -> int:
                 seen[new].append(turn)
             else:
                 new = 0
-                seen[new] += (turn,)
+                seen[new].append(turn)
         spoken.append(new)
     return new
 
