@@ -1,8 +1,7 @@
 import pprint
 import re
 
-from typing import List, Tuple
-from collections import namedtuple
+from typing import List, Tuple, Dict
 
 test = """\
 class: 1-3 or 5-7
@@ -17,6 +16,20 @@ nearby tickets:
 40,4,50
 55,2,20
 38,6,12\
+"""
+
+notes = """\
+class: 0-1 or 4-19
+row: 0-5 or 8-19
+seat: 0-13 or 16-19
+
+your ticket:
+11,12,13
+
+nearby tickets:
+3,9,18
+15,1,5
+5,14,9\
 """
 
 class Rule:
@@ -45,31 +58,56 @@ def parse(inp: str) -> Tuple[List[Rule], List[int], List[List[int]]]:
 
     return parsed_rules, your_ticket, nearby_tickets
 
-def part1(document: Tuple[List[Rule], List[int], List[List[int]]]) -> int:
-    rules, ticket, nearby = document
-    counter = 0
 
-    for ticket in nearby:
+def helper(rules: List[Rule], tickets: List[List[int]]) -> Tuple[int, List[List[int]]]:
+    counter = 0
+    valid_tickets = list()
+
+    for ticket in tickets:
+        valid_ticket = True
         for value in ticket:
-            valid = False
+            valid_value = False
             for rule in rules:
                 if value in rule.ranges[0] or value in rule.ranges[1]:
-                    valid = True
+                    valid_value = True
                     break
-            if not valid:
+            if not valid_value:
                 counter += value
+                valid_ticket = False
+                break
+        if valid_ticket:
+            valid_tickets.append(ticket)
 
-    return counter
+    return counter, valid_tickets
 
-def part2() -> int:
-    pass
+def part1(document: Tuple[List[Rule], List[int], List[List[int]]]) -> int:
+    rules, _, nearby = document
+    return helper(rules, nearby)[0]
+
+def determine_order(rules: List[Rule], tickets: List[List[int]]) -> Dict[Rule, List[int]]:
+    order = dict()  # maybe use defaultdict
+    
+    for index, rule in enumerate(rules):
+        # TODO: implement logic
+        pass
+
+
+    return order
+
+
+def part2(document: Tuple[List[Rule], List[int], List[List[int]]]) -> int:
+    rules, ticket, nearby = document
+    valid_tickets = helper(rules, nearby)[1]
+    solutions = determine_order(rules, valid_tickets)
+    pprint.pprint(solutions)
+
 
 def main():
     filepath = "../inputs/16.txt"
     with open(filepath) as f:
         content = f.read()
-    parsed = parse(content)
-    print(part1(parsed))
+    parsed = parse(notes)
+    print(part2(parsed))
 
 if __name__ == "__main__":
     main()
