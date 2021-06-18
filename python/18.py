@@ -32,33 +32,19 @@ paren_re = re.compile('\(([^()]*)\)')
 plus_re = re.compile('(\d+) \+ (\d+)')
 
 def paren_cb(match: Match[str]) -> str:
-    return str(compute1(match[1]))
+    return str(compute(match[1]))
 
 def paren_cb2(match: Match[str]) -> str:
-    return str(compute2(match[1]))
+    exp = match[1]
+    while plus_re.search(exp):
+        exp = plus_re.sub(plus_cb, exp)
+    
+    return str(compute(exp))
 
 def plus_cb(match: Match[str]) -> str:
     return str(int(match[1]) + int(match[2]))
 
-def compute1(exp: str) -> int:
-    parts = exp.split()
-    val = int(parts[0])
-    for i in range(2, len(parts), 2):
-        operator = parts[i-1]
-        operand = int(parts[i])
-        if operator == '+':
-            val += operand
-        elif operator == '*':
-            val *= operand
-        else:
-            raise AssertionError('Unknown operator:', operator)
-
-    return val
-
-def compute2(exp: str) -> int:
-    while plus_re.search(exp):
-        exp = plus_re.sub(plus_cb, exp)
-
+def compute(exp: str) -> int:
     parts = exp.split()
     val = int(parts[0])
     for i in range(2, len(parts), 2):
@@ -77,13 +63,13 @@ def evaluate1(expression: str) -> int:
     while paren_re.search(expression):
         expression = paren_re.sub(paren_cb, expression)
 
-    return compute1(expression)
+    return compute(expression)
 
 def evaluate2(expression: str) -> int:
     while paren_re.search(expression):
         expression = paren_re.sub(paren_cb2, expression)
 
-    return compute2(expression)
+    return compute(expression)
 
 def part1(expressions: List[str]) -> int:
     return sum(evaluate1(exp) for exp in expressions)
